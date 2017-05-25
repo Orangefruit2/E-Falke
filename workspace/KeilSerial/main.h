@@ -14,7 +14,7 @@
 #define DATAPORT              GPIOB
 #define UART_PRIORITY         6
 #define UART_RX_SUBPRIORITY   0
-#define MAXCLISTRING          100 // Biggest string the user will type
+#define MAXCLISTRING          5 // Biggest string the user will type
 
 uint8_t rxBuffer = '\000'; // where we store that one character that just came in
 uint8_t rxString[MAXCLISTRING]; // where we build our string from characters coming in
@@ -22,10 +22,12 @@ int rxindex = 0; // index for going though rxString
 
 /* Handle structs */
 UART_HandleTypeDef huart1;
-DMA_HandleTypeDef hdma_usart1_rx;
-DMA_HandleTypeDef hdma_usart1_tx;
+//DMA_HandleTypeDef hdma_usart1_rx;
+//DMA_HandleTypeDef hdma_usart1_tx;
 //IWDG_HandleTypeDef hiwdg;		// Watchdog
 
 void initIO(void);
 void initUSART(void);
 void initDMA(void);
+
+void printS(char string[]);

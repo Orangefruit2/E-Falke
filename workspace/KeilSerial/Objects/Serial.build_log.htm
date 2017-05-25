@@ -17,20 +17,23 @@ Library Manager: ArmAr.exe V5.06 update 4 (build 422)
 Hex Converter:   FromElf.exe V5.06 update 4 (build 422)
 CPU DLL:         SARMCM3.DLL V5.23
 Dialog DLL:      DCM.DLL V1.15.0.0
-Target DLL:      UL2CM3.DLL V1.159.7.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
 Dialog DLL:      TCM.DLL V1.27.0.0
  
 <h2>Project:</h2>
 C:\Users\matthias\Documents\E-Falke\workspace\KeilSerial\Serial.uvprojx
-Project File Date:  05/09/2017
+Project File Date:  05/16/2017
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 4 (build 422)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Target 1'
 compiling main.c...
+main.c(113): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
+        printS(&rxBuffer); // Echo the inputed character
+main.c: 1 warning, 0 errors
 linking...
-Program Size: Code=4266 RO-data=450 RW-data=16 ZI-data=1992  
-".\Objects\Serial.axf" - 0 Error(s), 0 Warning(s).
+Program Size: Code=3070 RO-data=442 RW-data=20 ZI-data=1700  
+".\Objects\Serial.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
