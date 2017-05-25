@@ -6,7 +6,6 @@ int main(void) {
 	
 	initIO();
 	initUSART();
-	//initDMA();
 	
 	while(1);
 }
@@ -44,48 +43,31 @@ void initUSART(){
 	
 
 	/* Start the receiver */
-	
-	HAL_NVIC_SetPriority(USART1_IRQn , UART_PRIORITY, UART_RX_SUBPRIORITY);
+		
+		/* Peripheral interrupt init */
+
+	HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
 	HAL_NVIC_EnableIRQ(USART1_IRQn);
 	
-	__HAL_UART_FLUSH_DRREGISTER(&huart1);
-	//HAL_UART_Receive_DMA(&huart1, &rxBuffer, 1);
-	HAL_UART_Receive_IT(&huart1, &rxBuffer, 1);
+
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
 
 }
 
-/*
-void initDMA(){
-
-	hdma_usart1_rx.Instance = DMA2_Stream2;
-	hdma_usart1_rx.Init.Channel = DMA_CHANNEL_4;
-	hdma_usart1_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
-	hdma_usart1_rx.Init.PeriphInc = DMA_PINC_DISABLE;
-	hdma_usart1_rx.Init.MemInc = DMA_MINC_DISABLE;
-	hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-	hdma_usart1_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-	hdma_usart1_rx.Init.Mode = DMA_CIRCULAR;
-	hdma_usart1_rx.Init.Priority = DMA_PRIORITY_LOW;
-	hdma_usart1_rx.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-	HAL_DMA_Init(&hdma_usart1_rx);
-
-	__HAL_LINKDMA(&huart1, hdmarx, hdma_usart1_rx);
-
-	HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, UART_PRIORITY, UART_RX_SUBPRIORITY);
-	HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
-	
-	
-	*//* Start the receiver */
-	/*
-	__HAL_UART_FLUSH_DRREGISTER(&huart1);
-	HAL_UART_Receive_DMA(&huart1, &rxBuffer, 1);
-}*/
 
 /* Prints the supplied string to uart */
 void printS(char string[])
 {
 	HAL_UART_Transmit(&huart1, (uint8_t*)string, strlen(string), 5);
 }
+
+void USART1_IRQHandler(void)
+{
+  HAL_UART_IRQHandler(&huart1);
+	HAL_UART_Receive_IT(&huart1, &rxBuffer, 1);
+  __HAL_UART_FLUSH_DRREGISTER(&huart1);
+}
+
 
 /* UART TX complete callback */
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
@@ -98,10 +80,6 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart){
 	
 }
 
-/*void DMA2_Stream2_IRQHandler(void){
-	HAL_NVIC_ClearPendingIRQ(DMA2_Stream2_IRQn);
-	HAL_DMA_IRQHandler(&hdma_usart1_rx);
-}*/
 
 /* UART RX complete callback */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
@@ -111,7 +89,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	int i = 0;
 
 	printS(&rxBuffer); // Echo the inputed character
-	
+	/*
 	if (rxBuffer == 8 || rxBuffer == 127) // If Backspace or del
 	{
 		printS(" \b"); // Properly clear the character
@@ -138,8 +116,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			printS("\r\nBrinir> ");
 		}
 	}
+	*/
 	
-	
-	HAL_UART_Receive_IT(&huart1, &rxBuffer, 1);
+	//HAL_UART_Receive_IT(&huart1, &rxBuffer, 1);
 	
 }
