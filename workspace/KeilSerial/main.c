@@ -7,7 +7,16 @@ int main(void) {
 	initIO();
 	initUSART();
 	
-	while(1);
+	
+	pi300_polling_msg polling_msg = getExampleMsg();
+	while(1){
+		for(int i = 0;i<11000000/500*1000;i=i+1);
+		printB(((uint8_t*)&polling_msg), sizeof(polling_msg));
+		if(flags & 0x1){
+			// compute new State from new Msg at currentMsgId
+			printB(((uint8_t*)&controlMsgBuffer[currentMsgId]), sizeof(controlMsgBuffer[currentMsgId]));
+		}
+	}
 }
 
 void initIO(){
@@ -61,6 +70,12 @@ void printS(char string[])
 	HAL_UART_Transmit(&huart1, (uint8_t*)string, strlen(string), 5);
 }
 
+void printB(uint8_t* bytes, uint8_t len)
+{
+	HAL_UART_Transmit(&huart1, (uint8_t*)bytes, len, 5);
+}
+
+
 void USART1_IRQHandler(void)
 {
   HAL_UART_IRQHandler(&huart1);
@@ -89,35 +104,17 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	int i = 0;
 
 	printS(&rxBuffer); // Echo the inputed character
-	/*
-	if (rxBuffer == 8 || rxBuffer == 127) // If Backspace or del
-	{
-		printS(" \b"); // Properly clear the character
-		rxindex--; 
-		if (rxindex < 0) rxindex = 0;
-	}
-
-	else if (rxBuffer == '\n' || rxBuffer == '\r') // If Enter
-	{
-		///executeSerialCommand(rxString);
-		rxString[rxindex] = 0;
-		rxindex = 0;
-		for (i = 0; i < MAXCLISTRING; i++) rxString[i] = 0; // Clear the string buffer
-	}
-
-	else
-	{
-		rxString[rxindex] = rxBuffer;
-		rxindex++;
-		if (rxindex > MAXCLISTRING)
-		{
-			rxindex = 0;
-			for (i = 0; i < MAXCLISTRING; i++) rxString[i] = 0; // Clear the string buffer
-			printS("\r\nBrinir> ");
-		}
-	}
-	*/
+		
+	((uint8_t*)&controlMsgBuffer[(currentMsgId+1)%2])[rxindex] = rxBuffer;
+	rxindex++;
 	
-	//HAL_UART_Receive_IT(&huart1, &rxBuffer, 1);
+	if (rxindex > sizeof(controlMsgBuffer[(currentMsgId+1)%2]))
+	{
+		rxindex = 0;
+		flags |= 0x1;
+		currentMsgId = (currentMsgId+1)%2;
+		//for (i = 0; i < MAXCLISTRING; i++) rxString[i] = 0; // Clear the string buffer
+	}
+	
 	
 }

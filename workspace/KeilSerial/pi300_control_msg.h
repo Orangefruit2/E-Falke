@@ -1,5 +1,5 @@
 
-#define MSG_SIZE = sizeof(pi300_control_msg);
+#define MSG_SIZE_CONTROL = sizeof(pi300_control_msg);
 
 typedef struct{
 	uint8_t adresse;

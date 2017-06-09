@@ -399,6 +399,11 @@
               <FileType>5</FileType>
               <FilePath>.\pi300_control_msg.h</FilePath>
             </File>
+            <File>
+              <FileName>pi300_polling_msg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\pi300_polling_msg.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

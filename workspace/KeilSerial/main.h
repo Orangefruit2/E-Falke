@@ -6,6 +6,7 @@
 #include "stm32f4xx_hal.h"
 
 #include "pi300_control_msg.h"
+#include "pi300_polling_msg.h"
 
 
 #define BAUDRATE              38400 //9600
@@ -14,21 +15,19 @@
 #define DATAPORT              GPIOB
 #define UART_PRIORITY         6
 #define UART_RX_SUBPRIORITY   0
-#define MAXCLISTRING          5 // Biggest string the user will type
 
 uint8_t rxBuffer = '\000'; // where we store that one character that just came in
-uint8_t rxString[MAXCLISTRING]; // where we build our string from characters coming in
-int rxindex = 0; // index for going though rxString
+pi300_control_msg controlMsgBuffer[2];	// Control Message from PI300, one for building, one is current state
+uint8_t rxindex = 0; // index for going through controlMsgBuffer while building
+uint8_t currentMsgId = 0;	// Index of the message in controlMsgBuffer which shows the current state
+uint8_t flags = 0;	// 1: New controlMsg was received
 
 /* Handle structs */
 UART_HandleTypeDef huart1;
-//DMA_HandleTypeDef hdma_usart1_rx;
-//DMA_HandleTypeDef hdma_usart1_tx;
 //IWDG_HandleTypeDef hiwdg;		// Watchdog
 
 void initIO(void);
 void initUSART(void);
-void initDMA(void);
-
 
 void printS(char string[]);
+void printB(uint8_t* bytes, uint8_t len);
