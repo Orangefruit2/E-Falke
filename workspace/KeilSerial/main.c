@@ -101,20 +101,21 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	__HAL_UART_FLUSH_DRREGISTER(&huart1); // Clear the buffer to prevent overrun
 
-	int i = 0;
-
-	printS(&rxBuffer); // Echo the inputed character
+	// DEBUG printS(&rxBuffer); // Echo the inputed character
+	
+	// Beginne mit Empfang wenn die Adresse 121 empfangen wird oder setze den Empfang fort, wenn sie schon begonnen ist
+	if((rxindex == 0 && rxBuffer == 121) || rxindex > 0){
+			
+		((uint8_t*)&controlMsgBuffer[(currentMsgId+1)%2])[rxindex] = rxBuffer;
+		rxindex++;
 		
-	((uint8_t*)&controlMsgBuffer[(currentMsgId+1)%2])[rxindex] = rxBuffer;
-	rxindex++;
-	
-	if (rxindex > sizeof(controlMsgBuffer[(currentMsgId+1)%2]))
-	{
-		rxindex = 0;
-		flags |= 0x1;
-		currentMsgId = (currentMsgId+1)%2;
-		//for (i = 0; i < MAXCLISTRING; i++) rxString[i] = 0; // Clear the string buffer
+		if (rxindex > sizeof(controlMsgBuffer[(currentMsgId+1)%2]))
+		{
+			rxindex = 0;
+			flags |= 0x1;
+			currentMsgId = (currentMsgId+1)%2;
+			//for (int i = 0; i < MAXCLISTRING; i++) rxString[i] = 0; // Clear the string buffer
+		}
+		
 	}
-	
-	
 }
