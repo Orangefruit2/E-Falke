@@ -30,16 +30,14 @@ Build target 'Target 1'
 compiling main.c...
 pi300_polling_msg.h(27): warning:  #69-D: integer conversion resulted in truncation
         polling_msg_example.checksum = 1564;
-main.h(33): warning:  #1-D: last line of file ends without a newline
+main.h(42): warning:  #1-D: last line of file ends without a newline
   void printB(uint8_t* bytes, uint8_t len);
-main.c(106): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
-        printS(&rxBuffer); // Echo the inputed character
-main.c(104): warning:  #177-D: variable "i"  was declared but never referenced
-        int i = 0;
-main.c: 4 warnings, 0 errors
+main.c(163): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
+         printS(&rx[uart].rxBuffer); // Echo the inputed character
+main.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=4398 RO-data=442 RW-data=12 ZI-data=1756  
-".\Objects\Serial.axf" - 0 Error(s), 4 Warning(s).
+Program Size: Code=4830 RO-data=442 RW-data=8 ZI-data=1888  
+".\Objects\Serial.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 

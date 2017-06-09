@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Serial.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Serial.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Tue May 30 14:54:12 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Fri Jun 09 11:38:56 2017
 <BR><P>
 <H3>Maximum Stack Usage =        144 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -121,7 +121,7 @@ Function Pointers
  <LI><a href="#[41]">UART5_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[5f]">UART_DMAAbortOnError</a> from stm32f4xx_hal_uart.o(i.UART_DMAAbortOnError) referenced from stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler)
  <LI><a href="#[31]">USART1_IRQHandler</a> from main.o(i.USART1_IRQHandler) referenced from startup_stm32f407xx.o(RESET)
- <LI><a href="#[32]">USART2_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
+ <LI><a href="#[32]">USART2_IRQHandler</a> from main.o(i.USART2_IRQHandler) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[33]">USART3_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[53]">USART6_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[7]">UsageFault_Handler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
@@ -564,9 +564,6 @@ Global Symbols
 <P><STRONG><a name="[41]"></a>UART5_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[32]"></a>USART2_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
-<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
-</UL>
 <P><STRONG><a name="[33]"></a>USART3_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
@@ -717,7 +714,8 @@ Global Symbols
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndTransmit_IT
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
 </UL>
-<BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
 <P><STRONG><a name="[86]"></a>HAL_UART_Init</STRONG> (Thumb, 114 bytes, Stack size 8 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_Init))
@@ -736,10 +734,11 @@ Global Symbols
 <P><STRONG><a name="[8e]"></a>HAL_UART_Receive_IT</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_Receive_IT))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = HAL_UART_Receive_IT
 </UL>
-<BR>[Called By]<UL><LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
+<LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[89]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 110 bytes, Stack size 16 bytes, main.o(i.HAL_UART_RxCpltCallback))
+<P><STRONG><a name="[89]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 282 bytes, Stack size 16 bytes, main.o(i.HAL_UART_RxCpltCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = HAL_UART_RxCpltCallback &rArr; printS &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printS
@@ -772,6 +771,14 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
+<P><STRONG><a name="[32]"></a>USART2_IRQHandler</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, main.o(i.USART2_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = USART2_IRQHandler &rArr; HAL_UART_IRQHandler &rArr; UART_Receive_IT &rArr; HAL_UART_RxCpltCallback &rArr; printS &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_IT
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
+</UL>
 <P><STRONG><a name="[8f]"></a>getExampleMsg</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, main.o(i.getExampleMsg))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = getExampleMsg
 </UL>
@@ -780,7 +787,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[91]"></a>initIO</STRONG> (Thumb, 134 bytes, Stack size 32 bytes, main.o(i.initIO))
+<P><STRONG><a name="[91]"></a>initIO</STRONG> (Thumb, 196 bytes, Stack size 32 bytes, main.o(i.initIO))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = initIO &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
@@ -788,7 +795,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[93]"></a>initUSART</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, main.o(i.initUSART))
+<P><STRONG><a name="[93]"></a>initUSART</STRONG> (Thumb, 152 bytes, Stack size 8 bytes, main.o(i.initUSART))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = initUSART &rArr; printS &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
@@ -799,7 +806,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[6e]"></a>main</STRONG> (Thumb, 70 bytes, Stack size 24 bytes, main.o(i.main))
+<P><STRONG><a name="[6e]"></a>main</STRONG> (Thumb, 110 bytes, Stack size 24 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = main &rArr; initUSART &rArr; printS &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printB
@@ -810,7 +817,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[95]"></a>printB</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, main.o(i.printB))
+<P><STRONG><a name="[95]"></a>printB</STRONG> (Thumb, 32 bytes, Stack size 16 bytes, main.o(i.printB))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = printB &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
@@ -818,7 +825,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7f]"></a>printS</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, main.o(i.printS))
+<P><STRONG><a name="[7f]"></a>printS</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, main.o(i.printS))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = printS &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
