@@ -1,3 +1,8 @@
+#ifndef PI300_BMS_MSG
+#define PI300_BMS_MSG
+
+#include <stdint.h>
+
 // following Martin Ruckdaeschel BA p. 85 (not complete)
 typedef struct{
 	uint8_t source_addr;			// source address (170 -> BMS 1)
@@ -15,3 +20,5 @@ typedef struct{
 	int32_t	charge_current;			// Ladestrom in A*0.1
 	int32_t discharge_current;	// Entladestrom in A*0.1
 } pi300_msg;
+
+#endif

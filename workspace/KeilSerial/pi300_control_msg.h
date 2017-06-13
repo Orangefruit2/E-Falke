@@ -1,3 +1,8 @@
+#ifndef PI300_CONTROL_MSG
+#define PI300_CONTROL_MSG
+
+
+#include <stdint.h>
 
 #define MSG_SIZE_CONTROL = sizeof(pi300_control_msg);
 
@@ -35,8 +40,7 @@ typedef struct{
 	uint8_t checksum;	// Checksum = byte1+byte2 …+byte24+13(dez)+170(dez) ; checksum as byte
 } pi300_control_msg;
 
-uint8_t checksumOK(pi300_control_msg *msg){
-	uint8_t ok = 0;
+static inline uint8_t checksumOK(pi300_control_msg *msg){
 	uint8_t* msgPtr = (uint8_t*)msg;
 	
 	uint8_t checksum = 13+ 170;
@@ -45,5 +49,7 @@ uint8_t checksumOK(pi300_control_msg *msg){
 		checksum = checksum + msgPtr[i];
 	}
 	
-	return checksum = msg->checksum;
+	return checksum == msg->checksum;
 }
+
+#endif

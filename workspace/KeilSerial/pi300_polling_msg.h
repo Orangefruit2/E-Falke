@@ -1,4 +1,7 @@
+#ifndef PI300_POLLING_MSG
+#define PI300_POLLING_MSG
 
+#include <stdint.h>
 #define MSG_SIZE_POLLING = sizeof(pi300_polling_msg);
 
 typedef struct
@@ -13,7 +16,7 @@ typedef struct
 
 
 
-pi300_polling_msg getExampleMsg(){
+static inline pi300_polling_msg getExampleMsg(){
 
 	pi300_polling_msg polling_msg_example;
 	
@@ -28,3 +31,5 @@ pi300_polling_msg getExampleMsg(){
 	
 	return polling_msg_example;
 }
+
+#endif
