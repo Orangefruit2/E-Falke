@@ -34,3 +34,16 @@ typedef struct{
 	uint8_t cr;			// Return (13)
 	uint8_t checksum;	// Checksum = byte1+byte2 …+byte24+13(dez)+170(dez) ; checksum as byte
 } pi300_control_msg;
+
+uint8_t checksumOK(pi300_control_msg *msg){
+	uint8_t ok = 0;
+	uint8_t* msgPtr = (uint8_t*)msg;
+	
+	uint8_t checksum = 13+ 170;
+	
+	for(int i = 0; i<sizeof(msg)-1;i++){
+		checksum = checksum + msgPtr[i];
+	}
+	
+	return checksum = msg->checksum;
+}

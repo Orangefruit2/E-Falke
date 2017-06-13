@@ -171,9 +171,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if (rx[uart].rxindex > sizeof(rx[uart].controlMsgBuffer[(rx[uart].currentMsgId+1)%2]))
 		{
 			rx[uart].rxindex = 0;
-			rx[uart].flags |= 0x1;
-			rx[uart].currentMsgId = (rx[uart].currentMsgId+1)%2;
+			if(checksumOK(&(rx[uart].controlMsgBuffer[(rx[uart].currentMsgId+1)%2]))){
+				rx[uart].flags |= 0x1;
+				rx[uart].currentMsgId = (rx[uart].currentMsgId+1)%2;
+			}else{
 			//for (int i = 0; i < MAXCLISTRING; i++) rxString[i] = 0; // Clear the string buffer
+			}
 		}
 		
 	}
