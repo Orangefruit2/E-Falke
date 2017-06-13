@@ -2,14 +2,15 @@
 
 int main(void) {
 	
+	
+	
 	initSerial();
 	
 	while(1){
-		for(int i = 0;i<11000000/500*1000;i=i+1){
-			pollControlMsg();
-			checkReceiveState();
-		}
+		// Polling alle 10ms 
+		HAL_Delay(MILLIS_TO_TICK(10));
+		pollControlMsg();
+		checkReceiveState();
 	}
 }
-
 
