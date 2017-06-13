@@ -1,0 +1,25 @@
+--cpu=Cortex-M4.fp
+"transmit\system_stm32f4xx.o"
+"transmit\stm32f4xx_it.o"
+"transmit\stm32f4xx_hal_msp.o"
+"transmit\main.o"
+"transmit\startup_stm32f407xx.o"
+"transmit\stm32f4xx_hal_tim_ex.o"
+"transmit\stm32f4xx_hal_dma_ex.o"
+"transmit\stm32f4xx_hal_pwr.o"
+"transmit\stm32f4xx_hal_flash_ramfunc.o"
+"transmit\stm32f4xx_hal_rcc_ex.o"
+"transmit\stm32f4xx_hal_pwr_ex.o"
+"transmit\stm32f4xx_hal_flash_ex.o"
+"transmit\stm32f4xx_hal.o"
+"transmit\stm32f4xx_hal_can.o"
+"transmit\stm32f4xx_hal_rcc.o"
+"transmit\stm32f4xx_hal_gpio.o"
+"transmit\stm32f4xx_hal_cortex.o"
+"transmit\stm32f4xx_hal_flash.o"
+"transmit\stm32f4xx_hal_dma.o"
+"transmit\stm32f4xx_hal_tim.o"
+--library_type=microlib --strict --scatter "Transmit\Transmit.sct"
+--diag_suppress=L6329 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "Transmit.map" -o Transmit\Transmit.axf
