@@ -26,7 +26,7 @@ extern rxControl rx[2];		// Receive State for UART1 and UART2
 void initSerial(void);
 
 void pollControlMsg(void);
-void checkReceiveState(void);
+void checkReceiveState(void (*rxCallback)(uint8_t uart, pi300_control_msg* msg));
 
 void printS(char string[]);
 void printB(uint8_t* bytes, uint8_t len);

@@ -14,11 +14,15 @@ void pollControlMsg(){
 	printB(((uint8_t*)&polling_msg), sizeof(polling_msg));
 }
 
-void checkReceiveState(){
+/* Checks whether new control messages have been received. If so, the flag is reset and 
+ * the rxCallback function is called.
+ */
+void checkReceiveState(void (*rxCallback)(uint8_t uart, pi300_control_msg* msg)){
+
 		for(int i = 0;i<2;i++){
 			if(rx[i].flags & 0x1){
-				// compute new Plane-State from new Msg at currentMsgId
-				printB(((uint8_t*)&rx[i].controlMsgBuffer[rx[i].currentMsgId]), sizeof(rx[i].controlMsgBuffer[rx[i].currentMsgId]));
+				rx[i].flags ^= 0x1;		// reset new Msg flag
+				(*rxCallback)(i,&rx[i].controlMsgBuffer[rx[i].currentMsgId]);
 			}
 		}
 }
