@@ -1,8 +1,22 @@
+/**
+ *	This part of the software for the serial communication with the two PI300 does the setup of
+ *	the two uarts.
+ *	Parameters and pins of the serial connection are defined in UART.h
+ *
+ *	@author=Matthias Kraus
+ *	@mail=mak4293@thi.de
+ */
+
 #include "UART.h"
+
 /* UART Handle structs */
 UART_HandleTypeDef huart1;	// Handle for UART1
 UART_HandleTypeDef huart2;	// Handle for UART2
 
+/*	Inits a UART according to the configuration. 
+*	huart: Handle for the UART
+* Instance: Instance of the UART, only USART1 and USART2 are allowed
+*/
 void initUSART(UART_HandleTypeDef* huart, USART_TypeDef* Instance){
 	huart->Instance = Instance;
 	huart->Init.BaudRate = BAUDRATE;
@@ -31,13 +45,13 @@ void initUSART(UART_HandleTypeDef* huart, USART_TypeDef* Instance){
 		__HAL_UART_ENABLE_IT(huart, UART_IT_IDLE);
 }
 
+/*	Inits the neccessary GPIOs for the UARTs. Has to be called before init of the UARTs */
 void initIO(){
 	
 	__GPIOB_CLK_ENABLE();
 	__USART1_CLK_ENABLE();
 	__GPIOD_CLK_ENABLE();
 	__USART2_CLK_ENABLE();
-	//__DMA2_CLK_ENABLE();
 
 	GPIO_InitTypeDef GPIO_InitStruct;
 

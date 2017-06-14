@@ -2,8 +2,8 @@
 #define PI300_POLLING_MSG
 
 #include <stdint.h>
-#define MSG_SIZE_POLLING = sizeof(pi300_polling_msg);
 
+/*  Datastructure of the PI300 polling message */
 typedef struct
 {
 	uint8_t adresse;	// Adressbyte (121dez. für PI300-Sollwertübertragung)
@@ -15,7 +15,7 @@ typedef struct
 }pi300_polling_msg;
 
 
-
+/* Returns a polling message as defined in the documentation from Geiger */
 static inline pi300_polling_msg getExampleMsg(){
 
 	pi300_polling_msg polling_msg_example;

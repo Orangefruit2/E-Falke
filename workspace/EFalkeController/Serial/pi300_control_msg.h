@@ -1,11 +1,9 @@
 #ifndef PI300_CONTROL_MSG
 #define PI300_CONTROL_MSG
 
-
 #include <stdint.h>
 
-#define MSG_SIZE_CONTROL = sizeof(pi300_control_msg);
-
+/* Datastructure of the PI300 control message */
 typedef struct{
 	uint8_t adresse;
 	uint16_t stellwert; //PWM Sollwert an den Steller in µs (1200 = 0%; 1700= 100%)
@@ -40,6 +38,10 @@ typedef struct{
 	uint8_t checksum;	// Checksum = byte1+byte2 …+byte24+13(dez)+170(dez) ; checksum as byte
 } pi300_control_msg;
 
+/* Returns true or false depending on whether the checksum in the pi300_control_msg msg fits to the rest of the 
+ * message. 
+ * ! Algorithm for computing the checksum was guessed from the documentation from Geiger, might be incorrect!
+*/
 static inline uint8_t checksumOK(pi300_control_msg *msg){
 	uint8_t* msgPtr = (uint8_t*)msg;
 	
