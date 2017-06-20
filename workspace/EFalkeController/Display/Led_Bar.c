@@ -1,13 +1,14 @@
 #include "LED_Bar.h"
+#include "../clock.h"
 
-static void LED_Bar_Init_Pin(int pin) {
+static void LED_Bar_Init_Pin(ledBar* ledBar) {
 	//INit a single Pin 
 	GPIO_InitTypeDef LED_Init;
 	LED_Init.Mode=GPIO_MODE_OUTPUT_PP;
-	LED_Init.Pin= pin;
+	LED_Init.Pin= ledBar->pinClock|ledBar->pinData;
 	LED_Init.Pull=GPIO_PULLDOWN;
 	LED_Init.Speed=GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(GPIOD,&LED_Init);
+	HAL_GPIO_Init(ledBar->pinPort,&LED_Init);
 }
 
 
@@ -39,21 +40,20 @@ static void sendData(ledBar* ledBar, unsigned int data) {
   }
 }
 void LED_Bar_init(ledBar* bar) {
-			//All Leds off
+	 //All Leds off
 		for (int i = 0; i < 10; i++){
 			bar->state[i] = 0x00;
 		}
 		//Init clockPin
-		LED_Bar_Init_Pin(bar->pinClock);
-		//Init DataPin
-		LED_Bar_Init_Pin(bar->pinData);
+		LED_Bar_Init_Pin(bar);
+
 }
 void setLed(ledBar* ledBar,uint8_t led, float brightness){
 	
   if(brightness>1)brightness=1;
 	if(brightness<0)brightness=0;
 	
-	if(led>9)led=9;
+	if(led>=LED_COUNT)led=LED_COUNT-1;
 
   // 8 (noticable) levels of brightness
   // 00000000 darkest
@@ -63,8 +63,6 @@ void setLed(ledBar* ledBar,uint8_t led, float brightness){
   // ........
   // 11111111 brightest
   ledBar->state[led] = ~(~0 << (uint8_t) (brightness*8));
-
-  //show_Data(ledBar);
 }
 
 void show_Data(ledBar* ledBar)
@@ -73,8 +71,7 @@ void show_Data(ledBar* ledBar)
 	
   for (unsigned char i = 0; i < 10; i++)
   {
-	  // Go forward on __state
-      sendData(ledBar, ledBar->state[i]);
+		sendData(ledBar, ledBar->state[i]);
   }
   // Two extra empty bits for padding the command to the correct length
   sendData(ledBar, 0x00);
