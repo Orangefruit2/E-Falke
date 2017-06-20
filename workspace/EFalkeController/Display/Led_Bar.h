@@ -12,12 +12,12 @@
 typedef struct ledBar {
 	uint16_t pinClock;
   uint16_t pinData;
+	GPIO_TypeDef* pinPort;
 	uint8_t state[LED_COUNT];
 } ledBar;
 
 void LED_Bar_init(ledBar* bar);
 void setLed(ledBar* ledBar,uint8_t led, float brightness);// Set brightness for a single led, range from 0 to 1
 void show_Data(ledBar* ledBar);
-//void sendData(ledBar* ledBar, unsigned int data);
 
 #endif
