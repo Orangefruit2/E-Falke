@@ -36,6 +36,7 @@ void checkReceiveState(void (*rxCallback)(uint8_t uart, pi300_control_msg* msg))
 		for(int i = 0;i<2;i++){
 			if(rx[i].flags & 0x1){
 				rx[i].flags ^= 0x1;		// reset new Msg flag
+				rx[i].currentMsgId = (rx[i].currentMsgId+1)%2;
 				(*rxCallback)(i,&rx[i].controlMsgBuffer[rx[i].currentMsgId]);
 			}
 		}
@@ -86,7 +87,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			// If message checksum is ok, set new message flag and point currentMsgId to the new message
 			if(checksumOK(&(rx[uart].controlMsgBuffer[(rx[uart].currentMsgId+1)%2]))){
 				rx[uart].flags |= 0x1;
-				rx[uart].currentMsgId = (rx[uart].currentMsgId+1)%2;
 			}else{
 				//for (int i = 0; i < MAXCLISTRING; i++) rxString[i] = 0; // Clear the string buffer
 			}
