@@ -1,0 +1,25 @@
+--cpu=Cortex-M4.fp
+"receive\stm32f4xx_hal_dma.o"
+"receive\stm32f4xx_hal_tim.o"
+"receive\stm32f4xx_hal_flash_ex.o"
+"receive\stm32f4xx_hal_gpio.o"
+"receive\stm32f4xx_hal_pwr_ex.o"
+"receive\stm32f4xx_hal_flash_ramfunc.o"
+"receive\stm32f4xx_hal_tim_ex.o"
+"receive\stm32f4xx_hal_can.o"
+"receive\stm32f4xx_hal_rcc_ex.o"
+"receive\stm32f4xx_hal_pwr.o"
+"receive\stm32f4xx_hal_dma_ex.o"
+"receive\stm32f4xx_hal_flash.o"
+"receive\stm32f4xx_hal.o"
+"receive\stm32f4xx_hal_cortex.o"
+"receive\stm32f4xx_hal_rcc.o"
+"receive\system_stm32f4xx.o"
+"receive\startup_stm32f407xx.o"
+"receive\main.o"
+"receive\stm32f4xx_hal_msp.o"
+"receive\stm32f4xx_it.o"
+--library_type=microlib --strict --scatter "Receive\Receive.sct"
+--diag_suppress=L6329 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "Receive.map" -o Receive\Receive.axf

@@ -1,0 +1,12 @@
+--cpu=Cortex-M4.fp
+".\flash\startup_stm32f40_41xxx.o"
+".\flash\system_stm32f4xx.o"
+".\flash\can.o"
+".\flash\candemo.o"
+".\flash\led.o"
+".\flash\retarget.o"
+".\flash\serial.o"
+--library_type=microlib --strict --scatter ".\Flash\CAN.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Flash\CAN.map" -o .\Flash\CAN.axf
